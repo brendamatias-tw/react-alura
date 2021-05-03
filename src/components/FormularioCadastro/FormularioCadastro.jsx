@@ -1,12 +1,20 @@
 import React, { Component } from "react";
 import "./estilo.css";
 class FormularioCadastro extends Component {
-
   constructor(props) {
     super(props);
     this.titulo = "";
     this.texto = "";
     this.categoria = "Sem categoria";
+    this.state = { categorias: [] }
+  }
+
+  componentDidMount() {
+    this.props.categorias.inscrever(this._novasCategorias.bind(this));
+  }
+
+  _novasCategorias(categorias) {
+    this.setState({ ...this.state, categorias })
   }
 
   _handleMudancaTitulo(evento) {
@@ -38,8 +46,8 @@ class FormularioCadastro extends Component {
         <select onChange={this._handleMudancaCategoria.bind(this)} className="form-cadastro_input">
           <option>Sem categoria</option>
 
-          {this.props.categorias.map((categoria) => {
-            return <option>{categoria}</option>
+          {this.state.categorias.map((categoria, index) => {
+            return <option key={index}>{categoria}</option>
           })}
         </select>
         <input
